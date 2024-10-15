@@ -1,12 +1,14 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading;
+using System.Windows.Forms;
 
 using Filter = System.UInt16;
 
 namespace InputInterceptorNS
 {
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Interoperability", "CA1416:Validate platform compatibility", Justification = "<Pending>")]
     public class KeyboardHook : Hook<KeyStroke>
     {
 
@@ -20,6 +22,7 @@ namespace InputInterceptorNS
 
         private static readonly Dictionary<Char, KeyData> KeyDictionary;
         private static readonly KeyData QuestionMark;
+        private static readonly Dictionary<Keys, KeyCode> VirtualKeyCodeToKeyCode;
 
         static KeyboardHook()
         {
@@ -122,6 +125,161 @@ namespace InputInterceptorNS
                 { '?', new KeyData { Code = KeyCode.Slash, Shift = true } }
             };
             QuestionMark = new KeyData { Code = KeyCode.Slash, Shift = true };
+
+            VirtualKeyCodeToKeyCode = new Dictionary<Keys, KeyCode>
+            {
+                //None
+                //LButton
+                //RButton
+                //Cancel
+                //MButton
+                //XButton1
+                //XButton2
+                { Keys.Back, KeyCode.Backspace },
+                { Keys.Tab, KeyCode.Tab },
+                //LineFeed
+                //Clear
+                { Keys.Return, KeyCode.Enter },
+                //ShiftKey
+                { Keys.ControlKey, KeyCode.Control },
+                { Keys.Menu, KeyCode.Alt },
+                //Pause
+                { Keys.Capital, KeyCode.CapsLock },
+                //...
+                { Keys.Escape, KeyCode.Escape },
+                //...
+                { Keys.Space, KeyCode.Space },
+                { Keys.PageUp, KeyCode.PageUp },
+                { Keys.PageDown, KeyCode.PageDown },
+                { Keys.End, KeyCode.End },
+                { Keys.Home, KeyCode.Home },
+                { Keys.Left, KeyCode.Left },
+                { Keys.Up, KeyCode.Up },
+                { Keys.Right, KeyCode.Right },
+                { Keys.Down, KeyCode.Down },
+                //{ Keys.Select, KeyCode.Select },
+                //{ Keys.Print, KeyCode.Print },
+                //{ Keys.Execute, KeyCode.Execute },
+                { Keys.Snapshot, KeyCode.PrintScreen },
+                { Keys.Insert, KeyCode.Insert },
+                { Keys.Delete, KeyCode.Delete },
+                //Keys.Help, KeyCode.Help
+                { Keys.D0, KeyCode.Zero },
+                { Keys.D1, KeyCode.One },
+                { Keys.D2, KeyCode.Two },
+                { Keys.D3, KeyCode.Three },
+                { Keys.D4, KeyCode.Four },
+                { Keys.D5, KeyCode.Five },
+                { Keys.D6, KeyCode.Six },
+                { Keys.D7, KeyCode.Seven },
+                { Keys.D8, KeyCode.Eight },
+                { Keys.D9, KeyCode.Nine },
+                { Keys.A, KeyCode.A },
+                { Keys.B, KeyCode.B },
+                { Keys.C, KeyCode.C },
+                { Keys.D, KeyCode.D },
+                { Keys.E, KeyCode.E },
+                { Keys.F, KeyCode.F },
+                { Keys.G, KeyCode.G },
+                { Keys.H, KeyCode.H },
+                { Keys.I, KeyCode.I },
+                { Keys.J, KeyCode.J },
+                { Keys.K, KeyCode.K },
+                { Keys.L, KeyCode.L },
+                { Keys.M, KeyCode.M },
+                { Keys.N, KeyCode.N },
+                { Keys.O, KeyCode.O },
+                { Keys.P, KeyCode.P },
+                { Keys.Q, KeyCode.Q },
+                { Keys.R, KeyCode.R },
+                { Keys.S, KeyCode.S },
+                { Keys.T, KeyCode.T },
+                { Keys.U, KeyCode.U },
+                { Keys.V, KeyCode.V },
+                { Keys.W, KeyCode.W },
+                { Keys.X, KeyCode.X },
+                { Keys.Y, KeyCode.Y },
+                { Keys.Z, KeyCode.Z },
+                { Keys.LWin, KeyCode.LeftWindowsKey },
+                { Keys.RWin, KeyCode.RightWindowsKey },
+                { Keys.Apps, KeyCode.Menu },
+                //Sleep
+                { Keys.NumPad0, KeyCode.Numpad0 },
+                { Keys.NumPad1, KeyCode.Numpad1 },
+                { Keys.NumPad2, KeyCode.Numpad2 },
+                { Keys.NumPad3, KeyCode.Numpad3 },
+                { Keys.NumPad4, KeyCode.Numpad4 },
+                { Keys.NumPad5, KeyCode.Numpad5 },
+                { Keys.NumPad6, KeyCode.Numpad6 },
+                { Keys.NumPad7, KeyCode.Numpad7 },
+                { Keys.NumPad8, KeyCode.Numpad8 },
+                { Keys.NumPad9, KeyCode.Numpad9 },
+                { Keys.Multiply, KeyCode.NumpadAsterisk },
+                { Keys.Add, KeyCode.NumpadPlus },
+                //Keys.Separator, KeyCode.NumpadSeparator
+                { Keys.Subtract, KeyCode.NumpadMinus },
+                //Keys.Decimal, KeyCode.NumpadDecimal
+                { Keys.Divide, KeyCode.NumpadDivide },
+                { Keys.F1, KeyCode.F1 },
+                { Keys.F2, KeyCode.F2 },
+                { Keys.F3, KeyCode.F3 },
+                { Keys.F4, KeyCode.F4 },
+                { Keys.F5, KeyCode.F5 },
+                { Keys.F6, KeyCode.F6 },
+                { Keys.F7, KeyCode.F7 },
+                { Keys.F8, KeyCode.F8 },
+                { Keys.F9, KeyCode.F9 },
+                { Keys.F10, KeyCode.F10 },
+                { Keys.F11, KeyCode.F11 },
+                { Keys.F12, KeyCode.F12 },
+                //F13-F24
+                { Keys.NumLock, KeyCode.NumLock },
+                { Keys.Scroll, KeyCode.ScrollLock },
+                { Keys.LShiftKey, KeyCode.LeftShift },
+                { Keys.RShiftKey, KeyCode.RightShift },
+                //Keys.LControlKey, KeyCode.LeftControl
+                //Keys.RControlKey, KeyCode.RightControl
+                //Keys.LMenu, KeyCode.LeftAlt
+                //Keys.RMenu, KeyCode.RightAlt
+                //Browser...
+                //Volume...
+                //Media...
+                //Launch...
+                //...
+                { Keys.OemSemicolon, KeyCode.Semicolon },
+                { Keys.Oemplus, KeyCode.Equals },
+                { Keys.Oemcomma, KeyCode.Comma },
+                { Keys.OemMinus, KeyCode.Dash },
+                { Keys.OemPeriod, KeyCode.Dot },
+                { Keys.OemQuestion, KeyCode.Slash },
+                { Keys.Oemtilde, KeyCode.Tilde },
+                { Keys.OemOpenBrackets, KeyCode.OpenBracketBrace },
+                { Keys.OemBackslash, KeyCode.Backslash },
+                { Keys.OemCloseBrackets, KeyCode.CloseBracketBrace },
+                { Keys.OemQuotes, KeyCode.Apostrophe }
+                //OemClear
+            };
+        }
+
+        public static KeyCode FromVirtualKeyCode(Keys vkCode)
+        {
+            switch (vkCode)
+            {
+                case Keys.LControlKey:
+                case Keys.RControlKey:
+                    vkCode = Keys.ControlKey;
+                    break;
+                case Keys.LMenu:
+                case Keys.RMenu:
+                    vkCode = Keys.Menu;
+                    break;
+            }
+            KeyCode keyCode;
+            if (!VirtualKeyCodeToKeyCode.TryGetValue(vkCode, out keyCode))
+            {
+                keyCode = KeyCode.UNKNOWN;
+            }
+            return keyCode;
         }
 
         public KeyboardHook(KeyboardFilter filter = KeyboardFilter.None, CallbackAction callback = null) :

@@ -4,9 +4,24 @@ using Filter = System.UInt16;
 
 namespace InputInterceptorNS
 {
-
+    /// <summary>
+    /// I guess these are the values that the oblitum Interception "driver" uses.
+    /// The driver code is closed source, but it is called with:
+    /// https://github.com/oblitum/Interception/blob/master/library/interception.c#L208
+    /// These key code values don't make much sense to me.
+    /// It makes little sense to define the values based on their order in a QWERTY keyboard.
+    /// It would seem to make more sense to define them based on well established Virtual Key Codes:
+    /// https://learn.microsoft.com/en-us/windows/win32/inputdev/virtual-key-codes
+    /// So now we have to map Virtual Key Codes values to these Interception driver KeyCode values.
+    /// 
+    /// Maybe from:
+    /// https://github.com/oblitum/Interception/issues/190#issuecomment-2223083911
+    /// https://learn.microsoft.com/en-us/windows/win32/api/winuser/ns-winuser-rawkeyboard
+    /// https://learn.microsoft.com/en-us/windows/win32/inputdev/about-keyboard-input#scan-codes
+    /// </summary>
     public enum KeyCode : UInt16
     {
+        UNKNOWN = 0,
         Escape = 1,
         One = 2,
         Two = 3,
