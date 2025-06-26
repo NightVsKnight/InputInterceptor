@@ -4,6 +4,26 @@ Library for keyboard and mouse input interception and simulation. Based on [inte
 
 Compatible with .NET Standard 1.3 and higher!
 
+# IMPORTANT FORK COMMENT!
+
+For my use case(s) this project is basically useless. :(
+
+In a nutshell: It works on first run after a fresh computer start up, but it will stop working after 2-3 USB keyboard/mouse disconnects/reconnects.
+
+If you never disconnect/reconnect your USB keyboard/mouse, it might work for you.
+
+I do disconnect/reconnect my USB keyboard/mouse very often via my KVM switch, so this project is a hard pass for me.
+
+TL;DR:
+1. This project is a fork of https://github.com/0x2E757/InputInterceptor.
+1. https://github.com/0x2E757/InputInterceptor 's readme's #Usage section [also seen below] says it is a wraper around "http://www.oblita.com/interception.html".
+1. http://www.oblita.com/interception.html is a deadend: See https://github.com/oblitum/Interception/issues/193
+1. https://github.com/oblitum/Interception/ is the project's actual home.
+1. The main problem is https://github.com/oblitum/Interception/issues/145 "WARNING: Breaks mice and keyboards on KVM": "Closed as not planned".  
+   My comment https://github.com/oblitum/Interception/issues/145#issuecomment-2413399605 explains my use case and why this is a hard pass for me.
+
+Also, it is rumored that the Interception driver is detected by EasyAnticheat, which also makes it a hard pass for my use cases.
+
 ## Usage
 
 You are able to use static `InputInterceptor` class to interact with the driver in the same way as shown in the driver [examples](http://www.oblita.com/interception.html).
